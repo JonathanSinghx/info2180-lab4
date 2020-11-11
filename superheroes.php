@@ -62,14 +62,32 @@ $superheroes = [
       "biography" => "Notably powerful, Wanda Maximoff has fought both against and with the Avengers, attempting to hone her abilities and do what she believes is right to help the world.",
   ], 
 ];
+$empty = [];
+$q = $_REQUEST["q"];
+if ($q !== ""){
+  $q = strtolower($q);
+  $count = 0;
+  foreach ($superheroes as $superhero){
 
-?>
+    $alias = strtolower($superhero["alias"]);
+    $name = strtolower($superhero["name"]);
 
-<ul>
-<?php foreach ($superheroes as $superhero): ?>
-  <li><?= $superhero['alias']; ?></li>
-<?php endforeach; ?>
-</ul>
+    if ( $q == $alias || $q == $name){
+      echo "<hr><h3>".$superhero["alias"]."</h3><h4>".$superhero["name"]."</h4><p>".$superhero["biography"]."</p>";
+      break;
+    }elseif ($count == 9){
+      echo "<hr><p style='color:red'>Superhero Not Found</p>";
+    }
+    $count++;
+  }
+}else{
+    echo "<hr><ul>";
+    foreach ($superheroes as $superhero) {
+      echo "<li>".$superhero['alias']."</li>";
+    }
+    echo "</ul>";
+  }
+?> 
 
 
 
